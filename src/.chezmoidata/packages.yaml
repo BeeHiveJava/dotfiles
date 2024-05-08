@@ -1,0 +1,8 @@
+---
+packages:
+  apt:
+  - apt-transport-https
+  - ca-certificates
+  - curl
+  - wget
+  - thefuck

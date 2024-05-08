@@ -1,0 +1,9 @@
+{{- if (eq .chezmoi.os "linux") -}}
+#!/usr/bin/fish
+echo -e "\033[0;32m>>>>> Fisher Update : Begin <<<<<\033[0m"
+
+# hash: {{ include "dot_config/private_fish/fish_plugins" | sha256sum }}
+fisher update
+
+echo -e "\033[0;32m>>>>> Fisher Update : End <<<<<\033[0m"
+{{- end -}}

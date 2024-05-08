@@ -1,0 +1,15 @@
+{{- if (eq .chezmoi.os "linux") -}}
+#!/usr/bin/fish
+echo -e "\033[0;32m>>>>> Fish Completions : Begin <<<<<\033[0m"
+
+if not test -d $__fish_config_dir/completions
+  mkdir -p $__fish_config_dir/completions
+end
+
+if type -q chezmoi
+  echo "setting up chezmoi completions"
+  chezmoi completion fish --output=$__fish_config_dir/completions/chezmoi.fish
+end
+
+echo -e "\033[0;32m>>>>> Fish Completions : End <<<<<\033[0m"
+{{- end -}}

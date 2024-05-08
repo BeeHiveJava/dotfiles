@@ -1,0 +1,13 @@
+{{- if (eq .chezmoi.os "linux") -}}
+#!/usr/bin/bash
+echo -e "\033[0;32m>>>>> Fish Shell : Begin <<<<<\033[0m"
+
+if [ $SHELL != $(which fish) ]; then
+  echo "setting default shell to fish"
+  sudo chsh "{{- .chezmoi.username -}}" -s "$(which fish)"
+else
+  echo "fish already default shell"
+fi
+
+echo -e "\033[0;32m>>>>> Fish Shell : End <<<<<\033[0m"
+{{- end -}}
