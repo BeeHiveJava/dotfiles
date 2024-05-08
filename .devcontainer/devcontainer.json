@@ -1,0 +1,8 @@
+{
+  "name": "dotfiles",
+  "image": "ghcr.io/beehivejava/template:default",
+  "postCreateCommand": "pre-commit install --install-hooks",
+  "features": {
+    "ghcr.io/rio/features/chezmoi": {}
+  }
+}
