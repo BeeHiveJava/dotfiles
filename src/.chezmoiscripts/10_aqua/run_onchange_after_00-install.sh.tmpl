@@ -1,0 +1,15 @@
+{{ if (eq .chezmoi.os "linux") -}}
+#!/usr/bin/bash
+echo -e "\033[0;32m>>>>> Aqua Install : Begin <<<<<\033[0m"
+
+current_aqua_version="{{ .versions.aqua -}}"
+
+if [ ! $(command -v aqua) ] || [ $(aqua -v | head -n1 | cut -d" " -f3 | sed "s/^/v/") != $current_aqua_version ]; then
+  echo "installing aqua $current_aqua_version"
+  curl -fsSL "https://raw.githubusercontent.com/aquaproj/aqua-installer/v3.0.0/aqua-installer" | bash -s -- -v "$current_aqua_version"
+else
+  echo "aqua already installed"
+fi
+
+echo -e "\033[0;32m>>>>> Aqua Install : End <<<<<\033[0m"
+{{ end -}}

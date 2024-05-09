@@ -1,0 +1,9 @@
+{{ if (eq .chezmoi.os "linux") -}}
+---
+registries:
+- type: standard
+  ref: {{ .versions.aqua_registry }}
+
+packages:
+- name: twpayne/chezmoi@{{ .versions.chezmoi }}
+{{- end }}

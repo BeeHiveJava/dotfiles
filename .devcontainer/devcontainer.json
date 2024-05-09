@@ -2,10 +2,6 @@
   "name": "dotfiles",
   "image": "ghcr.io/beehivejava/template:default",
   "postCreateCommand": "sh chezmoi.sh && pre-commit install --install-hooks",
-  "features": {
-    "ghcr.io/rio/features/chezmoi": {},
-    "ghcr.io/devcontainers-contrib/features/fish-apt-get": {}
-  },
   "customizations": {
     "vscode": {
       "settings": {
