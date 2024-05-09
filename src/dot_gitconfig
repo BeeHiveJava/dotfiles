@@ -1,0 +1,10 @@
+[user]
+	name = BeeHiveJava
+	email = BeeHiveJava@users.noreply.github.com
+	signingkey = ~/.ssh/github
+[commit]
+	gpgsign = true
+[tag]
+	gpgsign = true
+[gpg]
+	format = ssh

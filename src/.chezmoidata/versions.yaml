@@ -8,3 +8,5 @@ versions:
   fd: v10.1.0
   bat: v0.24.0
   eza: v0.18.14
+  age: v1.1.1
+  sops: v3.8.1

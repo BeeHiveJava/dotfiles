@@ -11,4 +11,10 @@ packages:
 - name: sharkdp/fd@{{ .versions.fd }}
 - name: sharkdp/bat@{{ .versions.bat }}
 - name: eza-community/eza@{{ .versions.eza }}
+
+{{- if .agekey }}
+- name: FiloSottile/age@{{ .versions.age }}
+- name: mozilla/sops@{{ .versions.sops }}
+{{- end }}
+
 {{- end }}

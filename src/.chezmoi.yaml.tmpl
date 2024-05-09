@@ -1,5 +1,36 @@
 ---
-{{- /* Checks if running interactively, which is not the case for GitHub Codespaces */ -}}
+{{- /* Checks if running interactively */ -}}
 {{- $interactive := stdinIsATTY -}}
 
-sourceDir: {{ .chezmoi.sourceDir }}
+{{- /* Template file for chezmoi config file */ -}}
+{{- $headless := false -}}{{/* true if this machine does not have a screen and keyboard */}}
+{{- $agekey := false -}}{{/* true if this machine has agekey to decrypt secret */}}
+
+{{- $hostname := .chezmoi.hostname -}}
+{{- if eq $hostname "LENOVO-LAPTOP" -}}
+{{-   $headless = false -}}
+{{-   $agekey = true -}}
+{{- end -}}
+
+{{- if hasKey . "agekey" -}}
+{{-   $agekey = .agekey -}}
+{{- else if $interactive -}}
+{{-   $agekey = promptBool "agekey" -}}
+{{- end -}}
+
+{{- if $interactive -}}
+{{-   writeToStdout "💡 Tip: you can re-enter your data with `chezmoi init --data=false`.\n" -}}
+{{- end -}}
+
+sourceDir: "{{ .chezmoi.sourceDir }}"
+
+data:
+  headless: {{ $headless }}
+  agekey: {{ $agekey }}
+
+{{- if $agekey }}
+encryption: age
+age:
+  identity: {{ .chezmoi.homeDir }}/.config/sops/age/keys.txt
+  recipient: age1nytc57qdynd4v7skewp20huj0f5lrm8q36sqmmmmx4mzessh4c5qhq8c95
+{{- end }}
