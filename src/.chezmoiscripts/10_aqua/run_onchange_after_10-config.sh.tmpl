@@ -1,13 +1,15 @@
 {{ if (eq .chezmoi.os "linux") -}}
-#!/usr/bin/bash
-echo -e "\033[0;32m>>>>> Aqua Config : Begin <<<<<\033[0m"
+#!/usr/bin/env bash
 
+source "{{ .chezmoi.sourceDir }}/.chezmoitemplates/bash.sh"
 config_location="{{ .chezmoi.homeDir }}/.config/aqua.yaml"
 binary_location="{{ .chezmoi.homeDir }}/.local/share/aquaproj-aqua/bin/aqua"
 
+pretty_print ">>>>> Aqua Config : Begin <<<<<"
+
 # hash: {{ include "dot_config/aqua.yaml.tmpl" | sha256sum }}
-echo "running aqua install -a"
+pretty_print "> installing aqua packages"
 AQUA_GLOBAL_CONFIG="$config_location" "$binary_location" install -a
 
-echo -e "\033[0;32m>>>>> Aqua Config : End <<<<<\033[0m"
+pretty_print ">>>>> Aqua Config : End <<<<<"
 {{ end -}}

@@ -1,18 +1,20 @@
 {{- if (and (eq .chezmoi.os "linux") (eq .chezmoi.osRelease.id "debian")) -}}
-#!/usr/bin/bash
-echo -e "\033[0;32m>>>>> APT : Begin <<<<<\033[0m"
+#!/usr/bin/env bash
 
+source "{{ .chezmoi.sourceDir }}/.chezmoitemplates/bash.sh"
 packages=(
-{{ range .packages.apt -}}
-{{ . }}
-{{ end -}}
+  {{ range .packages.apt -}}
+  {{ . }}
+  {{ end -}}
 )
 
-echo "running apt update"
-sudo apt update --yes
+pretty_print ">>>>> APT : Begin <<<<<"
 
-echo "running apt install ${packages[@]}"
-sudo apt install --yes "${packages[@]}"
+pretty_print "> running apt update"
+run_as_root apt update --yes
 
-echo -e "\033[0;32m>>>>> APT : End <<<<<\033[0m"
+pretty_print "> running apt install ${packages[@]}"
+run_as_root apt install --yes "${packages[@]}"
+
+pretty_print ">>>>> APT : End <<<<<"
 {{- end -}}

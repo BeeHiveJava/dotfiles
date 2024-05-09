@@ -1,15 +1,21 @@
 {{ if (eq .chezmoi.os "linux") -}}
-#!/usr/bin/bash
-echo -e "\033[0;32m>>>>> Aqua Install : Begin <<<<<\033[0m"
+#!/usr/bin/env bash
 
-current_aqua_version="{{ .versions.aqua -}}"
+source "{{ .chezmoi.sourceDir }}/.chezmoitemplates/bash.sh"
+version="{{ .versions.aqua -}}"
 
-if [ ! $(command -v aqua) ] || [ $(aqua -v | head -n1 | cut -d" " -f3 | sed "s/^/v/") != $current_aqua_version ]; then
-  echo "installing aqua $current_aqua_version"
-  curl -fsSL "https://raw.githubusercontent.com/aquaproj/aqua-installer/v3.0.0/aqua-installer" | bash -s -- -v "$current_aqua_version"
+is_aqua_required() {
+  [ ! $(command -v aqua) ] || [ $(aqua -v | head -n1 | cut -d" " -f3 | sed "s/^/v/") != $version ]
+}
+
+pretty_print ">>>>> Aqua Install : Begin <<<<<"
+
+if is_aqua_required; then
+  pretty_print "> installing aqua $version"
+  curl -fsSL "https://raw.githubusercontent.com/aquaproj/aqua-installer/v3.0.0/aqua-installer" | bash -s -- -v "$version"
 else
-  echo "aqua already installed"
+  pretty_print "> aqua $version already installed" "$fg_yellow"
 fi
 
-echo -e "\033[0;32m>>>>> Aqua Install : End <<<<<\033[0m"
+pretty_print ">>>>> Aqua Install : End <<<<<"
 {{ end -}}

@@ -1,13 +1,20 @@
 {{- if (eq .chezmoi.os "linux") -}}
-#!/usr/bin/bash
-echo -e "\033[0;32m>>>>> Fish Shell : Begin <<<<<\033[0m"
+#!/usr/bin/env bash
 
-if [ $SHELL != $(which fish) ]; then
-  echo "setting default shell to fish"
+source "{{ .chezmoi.sourceDir }}/.chezmoitemplates/bash.sh"
+
+is_shell_required() {
+  [ $SHELL != $(which fish) ]
+}
+
+pretty_print ">>>>> Fish Shell : Begin <<<<<"
+
+if is_shell_required; then
+  pretty_print "> setting default shell to fish"
   sudo chsh "{{- .chezmoi.username -}}" -s "$(which fish)"
 else
-  echo "fish already default shell"
+  pretty_print "> fish already default shell" "$fg_yellow"
 fi
 
-echo -e "\033[0;32m>>>>> Fish Shell : End <<<<<\033[0m"
+pretty_print ">>>>> Fish Shell : End <<<<<"
 {{- end -}}

@@ -1,12 +1,13 @@
 {{- if (eq .chezmoi.os "linux") -}}
-#!/usr/bin/fish
+#!/usr/bin/env fish
+
 echo -e "\033[0;32m>>>>> Fisher Install : Begin <<<<<\033[0m"
 
 if not type -q fisher
-  echo "installing fisher using curl"
+  echo "> installing fisher using curl"
   curl -fsSL "https://git.io/fisher" | source && fisher install jorgebucaran/fisher
 else
-  echo "fisher already installed"
+  echo "> fisher already installed"
 end
 
 echo -e "\033[0;32m>>>>> Fisher Install : End <<<<<\033[0m"
