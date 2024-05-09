@@ -5,7 +5,7 @@ echo -e "\033[0;32m>>>>> Fisher Install : Begin <<<<<\033[0m"
 
 if not type -q fisher
   echo "> installing fisher using curl"
-  curl -fsSL "https://git.io/fisher" | source && fisher install jorgebucaran/fisher
+  curl -fsSL "https://git.io/fisher" | source && fisher update
 else
   echo "> fisher already installed"
 end

@@ -12,9 +12,11 @@ end
 set fzf_fd_opts --hidden --exclude=.git --exclude=.cache
 
 # FZF keybindings
-fzf_configure_bindings \
-  --git_log=\cg \
-  --git_status=\cs \
-  --variables=\ce \
-  --directory=\cf \
-  --history=\ch
+if type -q fzf_configure_bindings
+  fzf_configure_bindings \
+    --git_log=\cg \
+    --git_status=\cs \
+    --variables=\ce \
+    --directory=\cf \
+    --history=\ch
+end

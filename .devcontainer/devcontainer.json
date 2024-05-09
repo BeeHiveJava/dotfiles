@@ -4,14 +4,6 @@
   "postCreateCommand": "sh chezmoi.sh && pre-commit install --install-hooks",
   "customizations": {
     "vscode": {
-      "settings": {
-        "terminal.integrated.defaultProfile.linux": "fish",
-        "terminal.integrated.profiles.linux": {
-          "zsh": {
-            "path": "/usr/bin/fish"
-          }
-        }
-      },
       "extensions": [
         "ms-kubernetes-tools.vscode-kubernetes-tools"
       ]
