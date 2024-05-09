@@ -4,3 +4,7 @@ versions:
   aqua_registry: v4.174.0
   chezmoi: v2.48.0
   starship: v1.18.2
+  fzf: 0.52.0
+  fd: v10.1.0
+  bat: v0.24.0
+  eza: v0.18.14
