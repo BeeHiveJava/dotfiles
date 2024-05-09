@@ -3,3 +3,4 @@ versions:
   aqua: v2.27.3
   aqua_registry: v4.174.0
   chezmoi: v2.48.0
+  starship: v1.18.2
