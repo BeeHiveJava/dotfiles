@@ -24,6 +24,11 @@
 
 sourceDir: "{{ .chezmoi.sourceDir }}"
 
+interpreters:
+  ps1:
+    command: pwsh
+    args: ["-NoLogo"]
+
 data:
   headless: {{ $headless }}
   agekey: {{ $agekey }}

@@ -1,0 +1,23 @@
+{{ if (eq .chezmoi.os "windows") -}}
+#!/usr/bin/env pwsh
+
+. "{{ .chezmoi.sourceDir }}/.chezmoitemplates/pwsh.ps1"
+
+Write-Information ">>>>> Aqua Config : Begin <<<<<"
+
+Write-Information "> reloading environment"
+Invoke-RefreshPath
+
+Write-Information "> adding aqua global config"
+$env:AQUA_GLOBAL_CONFIG = $(Join-Path "{{ .chezmoi.homeDir }}" ".config" "aqua.yaml")
+[Environment]::SetEnvironmentVariable("AQUA_GLOBAL_CONFIG", "$env:AQUA_GLOBAL_CONFIG", "User")
+
+Write-Information "> adding aqua packages to path"
+Invoke-AddToPath $(Join-Path "$(aqua root-dir)" "bat")
+
+# hash: {{ include "dot_config/aqua.yaml.tmpl" | sha256sum }}
+Write-Information "> installing aqua packages"
+aqua install --all
+
+Write-Information ">>>>> Aqua Config : End <<<<<"
+{{ end -}}

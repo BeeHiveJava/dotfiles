@@ -1,0 +1,39 @@
+{{- if (eq .chezmoi.os "windows") -}}
+#!/usr/bin/env pwsh
+
+. "{{ .chezmoi.sourceDir }}/.chezmoitemplates/pwsh.ps1"
+
+Write-Information ">>>>> Scoop : Begin <<<<<"
+
+If (-Not (Test-CommandExists("scoop"))) {
+  Write-Information "> setting execution policy"
+  Set-ExecutionPolicy -ExecutionPolicy "RemoteSigned" -Scope "CurrentUser"
+
+  Write-Information "> installing scoop"
+  Invoke-RestMethod -Uri "https://get.scoop.sh" | Invoke-Expression
+}
+
+$Buckets = @(
+  {{ range .packages.scoop.buckets -}}
+  @{ Name = "{{ .name }}"; Repository = "{{ .repository }}" }
+  {{ end -}}
+)
+
+ForEach ($Bucket In $Buckets) {
+  Write-Information "> adding scoop bucket $($Bucket.Name) ($($Bucket.Repository))"
+  scoop bucket add "$($Bucket.Name)" "$($Bucket.Repository)"
+}
+
+$Packages = @(
+  {{ range .packages.scoop.packages -}}
+  "{{ . }}"
+  {{ end -}}
+)
+
+ForEach ($Package In $Packages) {
+  Write-Information "> running scoop install $Package"
+  scoop install "$Package"
+}
+
+Write-Information ">>>>> Scoop : End <<<<<"
+{{- end -}}

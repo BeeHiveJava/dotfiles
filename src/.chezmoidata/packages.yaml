@@ -8,3 +8,9 @@ packages:
   - wget
   - fonts-firacode
   - thefuck
+  scoop:
+    buckets:
+    - name: aquaproj
+      repository: https://github.com/aquaproj/scoop-bucket
+    packages:
+    - aqua

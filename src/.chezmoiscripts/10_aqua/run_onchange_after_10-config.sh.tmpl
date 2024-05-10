@@ -9,7 +9,7 @@ pretty_print ">>>>> Aqua Config : Begin <<<<<"
 
 # hash: {{ include "dot_config/aqua.yaml.tmpl" | sha256sum }}
 pretty_print "> installing aqua packages"
-AQUA_GLOBAL_CONFIG="$config_location" "$binary_location" install -a
+AQUA_GLOBAL_CONFIG="$config_location" "$binary_location" install --all
 
 pretty_print ">>>>> Aqua Config : End <<<<<"
 {{ end -}}

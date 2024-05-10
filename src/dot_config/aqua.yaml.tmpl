@@ -1,4 +1,3 @@
-{{ if (eq .chezmoi.os "linux") -}}
 ---
 registries:
 - type: standard
@@ -7,14 +6,14 @@ registries:
 packages:
 - name: twpayne/chezmoi@{{ .versions.chezmoi }}
 - name: starship/starship@{{ .versions.starship }}
+{{- if (eq .chezmoi.os "linux") }}
 - name: junegunn/fzf@{{ .versions.fzf }}
 - name: sharkdp/fd@{{ .versions.fd }}
 - name: sharkdp/bat@{{ .versions.bat }}
 - name: eza-community/eza@{{ .versions.eza }}
+{{- end }}
 
 {{- if .agekey }}
 - name: FiloSottile/age@{{ .versions.age }}
 - name: mozilla/sops@{{ .versions.sops }}
-{{- end }}
-
 {{- end }}

@@ -1,0 +1,6 @@
+{{ if (eq .chezmoi.os "windows") -}}
+#!/usr/bin/env pwsh
+
+Invoke-Expression (&starship init powershell)
+
+{{ end -}}
