@@ -1,0 +1,166 @@
+---
+general:
+  show_floating_on_top: true
+
+bar:
+  enabled: false
+
+gaps:
+  inner_gap: 10px
+  outer_gap: 45px 8px 8px 8px
+
+focus_borders:
+  active:
+    enabled: true
+    color: "#00ff00"
+
+  inactive:
+    enabled: false
+    color: "#ff0000"
+
+workspaces:
+- name: "1"
+  display_name: Main
+- name: "2"
+- name: "3"
+- name: "4"
+- name: "5"
+- name: "6"
+- name: "7"
+- name: "8"
+- name: "9"
+
+window_rules:
+# Zebar
+- command: ignore
+  match_process_name: /Zebar/
+
+# Task Manager requires admin privileges to manage and should be ignored unless running
+# the WM as admin.
+- command: ignore
+  match_process_name: /Taskmgr|ScreenClippingHost/
+
+# Launches system dialogs as floating by default (eg. File Explorer save/open dialog).
+- command: set floating
+  match_class_name: "#32770"
+
+# Do not manage picture-in-picture windows for browsers. Note that the default is for
+# English; change `match_title` to the window's title if you use another language.
+- command: ignore
+  match_title: "[Pp]icture.in.[Pp]icture"
+  match_class_name: Chrome_WidgetWin_1|MozillaDialogClass
+
+# Some applications (eg. Steam) have borders that extend past the normal border size.
+- command: resize borders 0px -7px -7px -7px
+  match_process_name: steam
+
+binding_modes:
+- name: resize
+  keybindings:
+  # Resize focused window by a percentage or pixel amount.
+  - command: resize width -2%
+    bindings: [Left, H]
+  - command: resize width +2%
+    bindings: [Right, L]
+  - command: resize height +2%
+    bindings: [Up, K]
+  - command: resize height -2%
+    bindings: [Down, J]
+  # Press enter/escape to return to default keybindings.
+  - command: binding mode none
+    bindings: [Escape, Enter]
+
+keybindings:
+# Shift focus in a given direction.
+- command: focus left
+  bindings: [Alt+Left, Alt+J]
+- command: focus right
+  bindings: [Alt+Right, Alt+OemSemicolon]
+- command: focus up
+  bindings: [Alt+Up, Alt+L]
+- command: focus down
+  bindings: [Alt+Down, Alt+K]
+
+# Move focused window in a given direction.
+- command: move left
+  bindings: [Alt+Shift+Left, Alt+Shift+J]
+- command: move right
+  bindings: [Alt+Shift+Right, Alt+Shift+OemSemicolon]
+- command: move up
+  bindings: [Alt+Shift+Up, Alt+Shift+L]
+- command: move down
+  bindings: [Alt+Shift+Down, Alt+Shift+K]
+
+# Resize
+- command: resize width -2%
+  bindings: [Alt+LWin+Left, Alt+LWin+H]
+- command: resize width +2%
+  bindings: [Alt+LWin+Right, Alt+LWin+L]
+- command: resize height +2%
+  bindings: [Alt+LWin+Up, Alt+LWin+K]
+- command: resize height -2%
+  bindings: [Alt+LWin+Down, Alt+LWin+J]
+
+# Binding mode
+- command: binding mode resize
+  binding: Alt+R
+
+# Direction
+- command: tiling direction toggle
+  binding: Alt+V
+
+# Floating
+- command: toggle floating
+  binding: Alt+Shift+Space
+
+# Kill
+- command: close
+  binding: Alt+Shift+Q
+
+# Reload
+- command: reload config
+  binding: Alt+Shift+C
+
+# Terminal
+- command: exec wezterm-gui
+  binding: Alt+Enter
+
+# Focus workspace
+- command: focus workspace 1
+  binding: Alt+1
+- command: focus workspace 2
+  binding: Alt+2
+- command: focus workspace 3
+  binding: Alt+3
+- command: focus workspace 4
+  binding: Alt+4
+- command: focus workspace 5
+  binding: Alt+5
+- command: focus workspace 6
+  binding: Alt+6
+- command: focus workspace 7
+  binding: Alt+7
+- command: focus workspace 8
+  binding: Alt+8
+- command: focus workspace 9
+  binding: Alt+9
+
+# Move workspace
+- commands: [move to workspace 1, focus workspace 1]
+  binding: Alt+Shift+1
+- commands: [move to workspace 2, focus workspace 2]
+  binding: Alt+Shift+2
+- commands: [move to workspace 3, focus workspace 3]
+  binding: Alt+Shift+3
+- commands: [move to workspace 4, focus workspace 4]
+  binding: Alt+Shift+4
+- commands: [move to workspace 5, focus workspace 5]
+  binding: Alt+Shift+5
+- commands: [move to workspace 6, focus workspace 6]
+  binding: Alt+Shift+6
+- commands: [move to workspace 7, focus workspace 7]
+  binding: Alt+Shift+7
+- commands: [move to workspace 8, focus workspace 8]
+  binding: Alt+Shift+8
+- commands: [move to workspace 9, focus workspace 9]
+  binding: Alt+Shift+9

@@ -10,7 +10,12 @@ packages:
   - thefuck
   scoop:
     buckets:
+    - name: extras
+      repository: https://github.com/ScoopInstaller/Extras
     - name: aquaproj
       repository: https://github.com/aquaproj/scoop-bucket
     packages:
     - aqua
+    - glazewm
+    - wezterm
+    - flow-launcher
