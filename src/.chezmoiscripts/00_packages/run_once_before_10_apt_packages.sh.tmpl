@@ -11,10 +11,20 @@ packages=(
 pretty_print ">>>>> APT : Begin <<<<<"
 
 pretty_print "> running apt update"
-run_as_root apt update --yes
+if ! run_as_root apt update --yes; then
+  pretty_print "Error: apt update failed" "$fg_red"
+  pretty_print "This may indicate network issues or repository problems" "$fg_red"
+  exit 1
+fi
 
 pretty_print "> running apt install ${packages[@]}"
-run_as_root apt install --yes "${packages[@]}"
+if ! run_as_root apt install --yes "${packages[@]}"; then
+  pretty_print "Error: apt install failed for packages: ${packages[*]}" "$fg_red"
+  pretty_print "Some packages may not be available in your repositories" "$fg_red"
+  pretty_print "Check package names and repository configuration" "$fg_red"
+  exit 1
+fi
+pretty_print "Successfully installed all apt packages" "$fg_green"
 
 pretty_print ">>>>> APT : End <<<<<"
 {{- end -}}

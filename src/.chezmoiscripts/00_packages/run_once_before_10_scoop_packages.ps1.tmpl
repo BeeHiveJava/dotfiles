@@ -7,10 +7,22 @@ Write-Information ">>>>> Scoop : Begin <<<<<"
 
 If (-Not (Test-CommandExists("scoop"))) {
   Write-Information "> setting execution policy"
-  Set-ExecutionPolicy -ExecutionPolicy "RemoteSigned" -Scope "CurrentUser"
+  try {
+    Set-ExecutionPolicy -ExecutionPolicy "RemoteSigned" -Scope "CurrentUser"
+  } catch {
+    Write-Error "Failed to set execution policy: $_"
+    exit 1
+  }
 
   Write-Information "> installing scoop"
-  Invoke-RestMethod -Uri "https://get.scoop.sh" | Invoke-Expression
+  try {
+    Invoke-RestMethod -Uri "https://get.scoop.sh" | Invoke-Expression
+  } catch {
+    Write-Error "Failed to install scoop: $_"
+    Write-Error "Check your internet connection and PowerShell execution policy"
+    exit 1
+  }
+  Write-Information "Scoop installed successfully"
 }
 
 $Buckets = @(
@@ -21,7 +33,13 @@ $Buckets = @(
 
 ForEach ($Bucket In $Buckets) {
   Write-Information "> adding scoop bucket $($Bucket.Name) ($($Bucket.Repository))"
-  scoop bucket add "$($Bucket.Name)" "$($Bucket.Repository)"
+  try {
+    scoop bucket add "$($Bucket.Name)" "$($Bucket.Repository)"
+  } catch {
+    Write-Error "Failed to add bucket $($Bucket.Name): $_"
+    Write-Error "Check the repository URL and your internet connection"
+    exit 1
+  }
 }
 
 $Packages = @(
@@ -32,8 +50,15 @@ $Packages = @(
 
 ForEach ($Package In $Packages) {
   Write-Information "> running scoop install $Package"
-  scoop install "$Package"
+  try {
+    scoop install "$Package"
+  } catch {
+    Write-Error "Failed to install package $Package: $_"
+    Write-Error "Package may not be available in configured buckets"
+    exit 1
+  }
 }
+Write-Information "Successfully installed all scoop packages"
 
 Write-Information ">>>>> Scoop : End <<<<<"
 {{- end -}}

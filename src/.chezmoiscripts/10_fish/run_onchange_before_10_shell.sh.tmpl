@@ -11,7 +11,12 @@ pretty_print ">>>>> Fish Shell : Begin <<<<<"
 
 if is_shell_required; then
   pretty_print "> setting default shell to fish"
-  sudo chsh "{{- .chezmoi.username -}}" -s "$(which fish)"
+  if ! sudo chsh "{{- .chezmoi.username -}}" -s "$(which fish)"; then
+    pretty_print "Error: Failed to change default shell to fish" "$fg_red"
+    pretty_print "Make sure fish is installed and you have sudo privileges" "$fg_red"
+    exit 1
+  fi
+  pretty_print "Successfully set fish as default shell" "$fg_green"
 else
   pretty_print "> fish already default shell" "$fg_yellow"
 fi

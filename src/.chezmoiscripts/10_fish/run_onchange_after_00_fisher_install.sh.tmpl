@@ -5,7 +5,12 @@ echo -e "\033[0;32m>>>>> Fisher Install : Begin <<<<<\033[0m"
 
 if not type -q fisher
   echo "> installing fisher using curl"
-  curl -fsSL "https://git.io/fisher" | source && fisher update
+  if not curl -fsSL "https://git.io/fisher" | source && fisher update
+    echo -e "\033[0;31mError: Failed to install fisher\033[0m" >&2
+    echo -e "\033[0;31mCheck your internet connection and fish shell installation\033[0m" >&2
+    exit 1
+  end
+  echo -e "\033[0;32m> fisher installed successfully\033[0m"
 else
   echo "> fisher already installed"
 end

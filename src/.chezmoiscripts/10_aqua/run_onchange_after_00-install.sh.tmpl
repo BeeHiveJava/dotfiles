@@ -12,7 +12,12 @@ pretty_print ">>>>> Aqua Install : Begin <<<<<"
 
 if is_aqua_required; then
   pretty_print "> installing aqua $version"
-  curl -fsSL "https://raw.githubusercontent.com/aquaproj/aqua-installer/v3.0.0/aqua-installer" | bash -s -- -v "$version"
+  if ! curl -fsSL "https://raw.githubusercontent.com/aquaproj/aqua-installer/v3.0.0/aqua-installer" | bash -s -- -v "$version"; then
+    pretty_print "Error: Failed to install aqua $version" "$fg_red"
+    pretty_print "Check your internet connection and the aqua installer URL" "$fg_red"
+    exit 1
+  fi
+  pretty_print "Successfully installed aqua $version" "$fg_green"
 else
   pretty_print "> aqua $version already installed" "$fg_yellow"
 fi
